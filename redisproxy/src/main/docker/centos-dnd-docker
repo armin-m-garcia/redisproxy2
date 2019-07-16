@@ -1,0 +1,20 @@
+FROM centos
+MAINTAINER armin.m.garcia@gmail.com
+RUN yum install -y yum-utils device-mapper-persistent-data lvm2
+RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+RUN yum install docker-ce
+RUN usermod -aG docker $(whoami)
+RUN systemctl enable docker.service
+RUN systemctl start docker.service
+RUN yum install epel-release 
+RUN yum install -y python-pip
+RUN pip install docker-compose
+RUN yum upgrade python*
+	
+
+	
+	yum install -y --setopt=obsoletes=0 \
+  docker-ce \
+  docker-ce-selinux

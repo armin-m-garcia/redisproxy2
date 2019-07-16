@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# declare an associative array to store the properties
+declare -A props
+
+# read file line by line and populate the props array. Field separator is "="
+while IFS='=' read -r k v; do
+   props["$k"]=`echo $v | tr -d '\r'`
+done <  src/main/resources/application.properties
+
+# declare -p props 
+echo "Enter configuration.  To accept [defaults], press <Enter>."
+
+# read the redist host URI
+read -p "Redis host URI [${props[redis.host]}]: " host 
+host=${host:-${props[redis.host]}}
+
+# read the server port for the Resp based server
+read -p "Redis proxy resp port [${props[redis.proxy.resp.port]}]: " port 
+port=${port:-${props[redis.proxy.resp.port]}}
+
+# read the expiration period for the cache used by the proxy
+read -p "Cache expiry period [${props[redis.proxy.cache.expiryPeriod]}]: " expiry 
+expiry=${expiry:-${props[redis.proxy.cache.expiryPeriod]}}
+
+# read the cache capacity limit 
+read -p "Cache capacity [${props[redis.proxy.cache.capacity]}]: " capacity
+capacity=${capacity:-${props[redis.proxy.cache.capacity]}}
+
+# just to confirm, ask whether the updates are to be saved
+read -p "Save configuration file? [y]: " update
+update=${update:-y}
+update=${update,,}
+
+# If the update is confirmed to be updated, go ahead and do so
+if [ "$update" = "y" ]; then
+	printf "redis.host=${host}\nredis.proxy.resp.port=${port}\nredis.proxy.cache.expiryPeriod=${expiry}\nredis.proxy.cache.capacity=${capacity}\n" > src/main/resources/application.properties
+	echo "Configuration saved."
+else
+	echo "Configuration was NOT saved."
+fi
