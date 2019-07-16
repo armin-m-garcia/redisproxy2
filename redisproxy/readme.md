@@ -1,6 +1,6 @@
 # Redis Cache
 The Redis Cache is a simple implementation of an in-memory cache backed by a Redis instance 
-service.  In addition, the Redis Cache provides a server that understand the Resp protocol 
+service.  In addition, the Redis Cache provides a server that understands the Resp protocol 
 and simply redirects the call to the actual Redis instance.
 
 # Architecture
@@ -11,7 +11,7 @@ and simply redirects the call to the actual Redis instance.
 A fundamental design principle is to treat locks suspiciously and design without them.
 Concurrency must be well thought out in the context of a single instance or a cluster of nodes.
 Locks limit throughput.  Avoid them!  One solution is to use a responsive 
-design versus a lock-and-check.
+design versus a lock-and-check.  This implementation is not built to scale given all the blocking calls.
   
 ## Operation: Get Complexity
 A cache is divided into buckets, otherwise known as segments in Ehcache. Determining 
@@ -28,10 +28,10 @@ for an operation closer to constant.
  
 ## Operation: LRU Eviction Complexity
 An eviction takes place when the capacity of the cache is reached and elements in the 
-cache need to be removed to make space.  A least-recently-used policy specifies that
-an element least accessed is the ideal candidate for eviction.  Ehcache's default configuration 
-is an LRU based strategy that takes a random sample of (m) elements and removes the least 
-recently used of that subset.  In this case, the complexity is O(m).
+cache need to be removed.  A least-recently-used policy specifies that an element least 
+accessed is the ideal candidate for eviction.  Ehcache's default configuration is an LRU 
+based strategy that takes a random sample of (m) elements and removes the least recently 
+used of that subset.  In this case, the complexity is O(m).
   
 ## Operation: Global Expiration
 Ehcache's global expiration strategy iterates through all items looking for elements that 
