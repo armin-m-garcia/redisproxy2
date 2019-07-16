@@ -4,7 +4,7 @@ service.  In addition, the Redis Cache provides a server that understand the Res
 and simply redirects the call to the actual Redis instance.
 
 # Architecture
-![alt text](https://github.com/armin-m-garcia/redisproxy/blob/master/redisproxy/src/main/images/rediscache.svg")
+![alt text](https://github.com/armin-m-garcia/redisproxy/blob/master/redisproxy/src/main/images/rediscache.svg)
 
 # Design
 ## Principle
