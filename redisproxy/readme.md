@@ -1,10 +1,10 @@
 # Redis Cache
 The Redis Cache is a simple implementation of an in-memory cache backed by a Redis instance 
 service.  In addition, the Redis Cache provides a server that understand the Resp protocol 
-and simply redirects the call the actual Redis instance.
+and simply redirects the call to the actual Redis instance.
 
 # Architecture
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/armin-m-garcia/redisproxy/blob/master/redisproxy/src/main/images/rediscache.svg")
 
 # Design
 ## Principle
